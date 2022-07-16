@@ -5,18 +5,22 @@ import org.json.*;
 
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.io.BufferedReader;
 import java.io.IOException;
 
 public class ApiExplorer {
-    public static int num = 1;
-    public static void main(String[] args) throws IOException {
+
+    public static void main(String[] args)  {
 
 
         for (int i = 0; i < 15; i ++) {
-            String json = getJson(i*1000 + 1,(i+1)*1000);
+            String json = null;
+            try {
+                json = getJson(i*1000 + 1,(i+1)*1000);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
             System.out.println(i*1000 + 1 +" " +(i+1)*1000);
             parsingJson(json);
         }
@@ -32,7 +36,7 @@ public class ApiExplorer {
 
         String urlString = "http://openapi.seoul.go.kr:8088/4a70655072746a7735395078694279/json/TbPublicWifiInfo/" + startRow + "/" + endRow + "/20220714";
 
-        URL url = new URL(urlString.toString());
+        URL url = new URL(urlString);
         HttpURLConnection conn = (HttpURLConnection) url.openConnection();
         conn.setRequestMethod("GET");
         conn.setRequestProperty("Content-type", "application/json");
@@ -87,9 +91,26 @@ public class ApiExplorer {
             String yCoordinates = arr.getJSONObject(i).getString("LNT"); // Y좌표
             String operationDate = arr.getJSONObject(i).getString("WORK_DTTM"); // 작업일자
 
-            System.out.println(num++);
-            System.out.println("managementNumber = " + managementNumber);
-            System.out.println("operationDate = " + operationDate);
+            Wifi wifi = new Wifi();
+            wifi.setManagementNumber(managementNumber);
+            wifi.setBoroughs(boroughs);
+            wifi.setWifiName(wifiName);
+            wifi.setRoadNameAddress(roadNameAddress);
+            wifi.setDetailedAddress(detailedAddress);
+            wifi.setInstallationLocationFloor(installationLocationFloor);
+            wifi.setInstallationType(installationType);
+            wifi.setInstallationOrgan(installationOrgan);
+            wifi.setServiceClassification(serviceClassification);
+            wifi.setCommunicationsNetwork(communicationsNetwork);
+            wifi.setInstallationYear(installationYear);
+            wifi.setIndoorAndOutdoorClassification(indoorAndOutdoorClassification);
+            wifi.setWifiConnectionEnvironment(wifiConnectionEnvironment);
+            wifi.setxCoordinates(xCoordinates);
+            wifi.setyCoordinates(yCoordinates);
+            wifi.setOperationDate(operationDate);
+
+            DbControl dbControl = new DbControl();
+            dbControl.insert(wifi);
         }
 
     }

@@ -15,9 +15,18 @@ public class Wifi {
     private String installationYear; // 설치년도
     private String indoorAndOutdoorClassification; // 실내외구분
     private String wifiConnectionEnvironment; // wifi 접속환경
-    private String xCoordinates; // X좌표
-    private String yCoordinates; // Y좌표
+    private double xCoordinates; // X좌표
+    private double yCoordinates; // Y좌표
     private String operationDate; // 작업일자
+    private float distance;
+
+    public float getDistance() {
+        return distance;
+    }
+
+    public void setDistance(float distance) {
+        this.distance = distance;
+    }
 
     public String getManagementNumber() {
         return managementNumber;
@@ -123,20 +132,28 @@ public class Wifi {
         this.wifiConnectionEnvironment = wifiConnectionEnvironment;
     }
 
-    public String getxCoordinates() {
+    public double getxCoordinates() {
         return xCoordinates;
     }
 
     public void setxCoordinates(String xCoordinates) {
-        this.xCoordinates = xCoordinates;
+        this.xCoordinates = Double.parseDouble(xCoordinates);
     }
 
-    public String getyCoordinates() {
+    public double getyCoordinates() {
         return yCoordinates;
     }
 
-    public void setyCoordinates(String yCoordinates) {
+    public void setxCoordinates(double xCoordinates) {
+        this.xCoordinates = xCoordinates;
+    }
+
+    public void setyCoordinates(double yCoordinates) {
         this.yCoordinates = yCoordinates;
+    }
+
+    public void setyCoordinates(String yCoordinates) {
+        this.yCoordinates = Double.parseDouble(yCoordinates);
     }
 
     public String getOperationDate() {
