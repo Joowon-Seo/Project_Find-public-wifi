@@ -10,7 +10,9 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head><%
+    int delete_id = Integer.parseInt(request.getParameter("delete_id"));
     DbControl history = new DbControl();
+    history.deleteHistory(delete_id);
     List<History> historyList = history.getHistoryList();
         %>
     <meta charset="utf-8">
@@ -47,18 +49,17 @@
         </THEAD>
         <tbody>
             <tr>
-                <% int idx = 1;
+                    <% int idx = 1;
                     for (History historyInfo : historyList){
                 %>
-                <tr>
-                    <td><%=idx++%></td>
-                    <td><%=historyInfo.getxCoordinates()%></td>
-                    <td><%=historyInfo.getyCoordinates()%></td>
-                    <td><%=historyInfo.getCheck_date()%></td>
-                    <td><input type="button" value="삭제"
-                               onclick="location.href='history-delete.jsp?delete_id=<%=
+            <tr>
+                <td><%=idx++%></td>
+                <td><%=historyInfo.getxCoordinates()%></td>
+                <td><%=historyInfo.getyCoordinates()%></td>
+                <td><%=historyInfo.getCheck_date()%></td>
+                <td><input type="button" value="삭제"
+                           onclick="location.href='history-delete.jsp?delete_id=<%=
                         historyInfo.getHistory_id()%>'">
-                    </td>
             </tr>
             <%
                 }

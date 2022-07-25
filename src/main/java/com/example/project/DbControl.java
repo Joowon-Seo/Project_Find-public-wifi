@@ -185,7 +185,6 @@ public class DbControl {
             System.out.println(nowX + " " + nowY);
 
 
-
             int affected = preparedStatement.executeUpdate();
 
             if (affected > 0){
@@ -395,6 +394,58 @@ public class DbControl {
         return historyList;
 
 
+    }
+
+    public void deleteHistory(int delete_id) {
+        connect();
+
+        try {
+
+            String sql = "delete " +
+                    "from HISTORY " +
+                    "where HISTORY_ID = ?";
+
+            preparedStatement = c.prepareStatement(sql);
+            preparedStatement.setInt(1, delete_id);
+
+            int affected = preparedStatement.executeUpdate();
+
+            if (affected > 0) {
+//                System.out.println(" 저장 성공 ");
+            } else {
+                System.out.println(" 삭제 실패 ");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+
+            // 위에서 오류가 나서 완벽한 close를 못 할 수도 있기 떄문에 finally 에서 처리해야 한다.
+
+            try {
+                if (rs != null && !rs.isClosed()) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                if (preparedStatement != null && !preparedStatement.isClosed()) {
+                    preparedStatement.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+
+            try {
+                if (c != null && !c.isClosed()) {
+                    c.isClosed();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
     }
 }
 
