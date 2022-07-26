@@ -1,6 +1,7 @@
 /* Java 1.8 샘플 코드 */
 
 package com.example.project;
+
 import org.json.*;
 
 import java.io.InputStreamReader;
@@ -15,20 +16,19 @@ public class ApiExplorer {
 
     public static ArrayList<Wifi> wifiArrayList = new ArrayList<>();
 
-    public static void main(String[] args)  {
+    public static void main(String[] args) {
 
 
-        for (int i = 0; i < 15; i ++) {
+        for (int i = 0; i < 15; i++) {
             String json = null;
             try {
-                json = getJson(i*1000 + 1,(i+1)*1000);
+                json = getJson(i * 1000 + 1, (i + 1) * 1000);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
-            System.out.println(i*1000 + 1 +" " +(i+1)*1000);
+            System.out.println(i * 1000 + 1 + " " + (i + 1) * 1000);
             parsingJson(json);
         }
-
 
 
     }
@@ -49,7 +49,7 @@ public class ApiExplorer {
         BufferedReader rd;
 
         // 서비스코드가 정상이면 200~300사이의 숫자가 나옵니다.
-        if(conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
+        if (conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
             rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
         } else {
             rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
@@ -69,15 +69,14 @@ public class ApiExplorer {
 
     }
 
-    public static void parsingJson(String json){
+    public static void parsingJson(String json) {
 
-        String jsonString = json ;
+        String jsonString = json;
         JSONObject obj = new JSONObject(jsonString);
         String pageName = Integer.toString(obj.getJSONObject("TbPublicWifiInfo").getInt("list_total_count"));
 
         JSONArray arr = obj.getJSONObject("TbPublicWifiInfo").getJSONArray("row");
-        for (int i = 0; i < arr.length(); i++)
-        {
+        for (int i = 0; i < arr.length(); i++) {
             String managementNumber = arr.getJSONObject(i).getString("X_SWIFI_MGR_NO"); // 관리번호
             String boroughs = arr.getJSONObject(i).getString("X_SWIFI_WRDOFC"); // 자치구
             String wifiName = arr.getJSONObject(i).getString("X_SWIFI_MAIN_NM"); // 와이파이명

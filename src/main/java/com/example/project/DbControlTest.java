@@ -14,6 +14,5 @@ public class DbControlTest {
 //        wifi.getDistance(37.2831549 , 127.156931);
 
 
-
     }
 }

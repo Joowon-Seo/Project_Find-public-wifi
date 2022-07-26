@@ -1,4 +1,5 @@
 package com.example.project;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +11,8 @@ public class DbControl {
     public static ResultSet rs = null;
 
     public static String result;
-    public void connect(){
+
+    public void connect() {
 
         try {
             Class.forName("org.sqlite.JDBC");
@@ -19,13 +21,12 @@ public class DbControl {
         }
 
 
-        try{
+        try {
             c = DriverManager.getConnection("jdbc:sqlite:C:\\zerobase\\Project Mission_1\\project\\test.db");
 //            if (c!=null)
 //                System.out.println("Connected to db.");
-        }
-        catch (SQLException ex) {
-            System.err.println("Couldn't connect."+ex.getMessage());
+        } catch (SQLException ex) {
+            System.err.println("Couldn't connect." + ex.getMessage());
         }
     }
 
@@ -69,7 +70,7 @@ public class DbControl {
         System.out.println("Table created successfully");
     }
 
-    public void createHistoryTable(){
+    public void createHistoryTable() {
         try {
             Class.forName("org.sqlite.JDBC");
             c = DriverManager.getConnection("jdbc:sqlite:C:\\zerobase\\Project Mission_1\\project\\test.db");
@@ -91,6 +92,7 @@ public class DbControl {
         }
         System.out.println("Table created successfully");
     }
+
     public void insert(ArrayList<Wifi> wifiArrayList) {
 
 
@@ -132,7 +134,7 @@ public class DbControl {
             int affected = preparedStatement.executeUpdate();
 
 
-            if (affected > 0){
+            if (affected > 0) {
 //                System.out.println(" 저장 성공 ");
             } else {
                 System.out.println(" 삽입 실패 ");
@@ -140,8 +142,7 @@ public class DbControl {
 
             c.commit();
 
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
             try {
                 c.rollback();
@@ -153,7 +154,7 @@ public class DbControl {
             // 위에서 오류가 나서 완벽한 close를 못 할 수도 있기 떄문에 finally 에서 처리해야 한다.
 
             try {
-                if (rs != null && !rs.isClosed()){
+                if (rs != null && !rs.isClosed()) {
                     rs.close();
                 }
             } catch (SQLException e) {
@@ -161,7 +162,7 @@ public class DbControl {
             }
 
             try {
-                if (preparedStatement != null && !preparedStatement.isClosed()){
+                if (preparedStatement != null && !preparedStatement.isClosed()) {
                     preparedStatement.close();
                 }
             } catch (SQLException e) {
@@ -169,7 +170,7 @@ public class DbControl {
             }
 
             try {
-                if (c != null && !c.isClosed()){
+                if (c != null && !c.isClosed()) {
                     c.isClosed();
                 }
             } catch (SQLException e) {
@@ -179,7 +180,7 @@ public class DbControl {
 
     }
 
-    public void insertHistory(String nowX, String nowY){
+    public void insertHistory(String nowX, String nowY) {
         connect();
 //
 //        nowX = Math.round(7);
@@ -200,21 +201,20 @@ public class DbControl {
 
             int affected = preparedStatement.executeUpdate();
 
-            if (affected > 0){
+            if (affected > 0) {
 //                System.out.println(" 저장 성공 ");
             } else {
                 System.out.println(" 저장 실패 ");
             }
 
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         } finally {
 
             // 위에서 오류가 나서 완벽한 close를 못 할 수도 있기 떄문에 finally 에서 처리해야 한다.
 
             try {
-                if (rs != null && !rs.isClosed()){
+                if (rs != null && !rs.isClosed()) {
                     rs.close();
                 }
             } catch (SQLException e) {
@@ -222,7 +222,7 @@ public class DbControl {
             }
 
             try {
-                if (preparedStatement != null && !preparedStatement.isClosed()){
+                if (preparedStatement != null && !preparedStatement.isClosed()) {
                     preparedStatement.close();
                 }
             } catch (SQLException e) {
@@ -230,7 +230,7 @@ public class DbControl {
             }
 
             try {
-                if (c != null && !c.isClosed()){
+                if (c != null && !c.isClosed()) {
                     c.isClosed();
                 }
             } catch (SQLException e) {
@@ -240,7 +240,7 @@ public class DbControl {
 
     }
 
-    public String selectCount(){
+    public String selectCount() {
         connect();
 
         try {
@@ -255,8 +255,7 @@ public class DbControl {
 
             result = rs.getString("COUNT(*)");
 
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
         }
         try {
@@ -268,9 +267,7 @@ public class DbControl {
         return result;
     }
 
-    public List<Wifi> getDistance(double nowX, double nowY){
-
-
+    public List<Wifi> getDistance(double nowX, double nowY) {
 
 
         connect();
@@ -298,7 +295,7 @@ public class DbControl {
             rs = preparedStatement.executeQuery();
 
 
-            while (rs.next()){
+            while (rs.next()) {
 
                 Wifi wifi = new Wifi();
 
@@ -325,16 +322,14 @@ public class DbControl {
             }
 
 
-
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         } finally {
 
             // 위에서 오류가 나서 완벽한 close를 못 할 수도 있기 떄문에 finally 에서 처리해야 한다.
 
             try {
-                if (rs != null && !rs.isClosed()){
+                if (rs != null && !rs.isClosed()) {
                     rs.close();
                 }
             } catch (SQLException e) {
@@ -342,7 +337,7 @@ public class DbControl {
             }
 
             try {
-                if (preparedStatement != null && !preparedStatement.isClosed()){
+                if (preparedStatement != null && !preparedStatement.isClosed()) {
                     preparedStatement.close();
                 }
             } catch (SQLException e) {
@@ -350,7 +345,7 @@ public class DbControl {
             }
 
             try {
-                if (c != null && !c.isClosed()){
+                if (c != null && !c.isClosed()) {
                     c.isClosed();
                 }
             } catch (SQLException e) {
@@ -363,7 +358,7 @@ public class DbControl {
 
     }
 
-    public List<History> getHistoryList(){
+    public List<History> getHistoryList() {
         connect();
 
         List<History> historyList = new ArrayList<>();
@@ -377,7 +372,7 @@ public class DbControl {
 
             rs = preparedStatement.executeQuery();
 
-            while (rs.next()){
+            while (rs.next()) {
 
                 History history = new History();
 
@@ -392,10 +387,7 @@ public class DbControl {
             }
 
 
-
-
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
         }
         try {
