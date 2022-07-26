@@ -98,18 +98,17 @@ public class DbControl {
 
         connect();
 
-
         try {
             c.setAutoCommit(false);
-            String sql = "";
             for (int i = 0; i < wifiArrayList.size(); i++) {
                 Wifi wifi = wifiArrayList.get(i);
 
-                sql += "INSERT INTO WIFI (managementNumber, boroughs, wifiName, roadNameAddress, " +
+                String sql = "INSERT INTO WIFI (managementNumber, boroughs, wifiName, roadNameAddress, " +
                         "                  detailedAddress, installationLocationFloor, installationType, installationOrgan, " +
                         "                  serviceClassification, communicationsNetwork, installationYear, indoorAndOutdoorClassification, " +
                         "                  wifiConnectionEnvironment, xCoordinates, yCoordinates, operationDate) " +
                         "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+
                 preparedStatement = c.prepareStatement(sql);
 
                 preparedStatement.setString(1, wifi.getManagementNumber());
@@ -129,16 +128,16 @@ public class DbControl {
                 preparedStatement.setDouble(15, wifi.getxCoordinates());
                 preparedStatement.setString(16, wifi.getOperationDate());
 
+                int affected = preparedStatement.executeUpdate();
+
+
+                if (affected > 0) {
+                    System.out.println(" 저장 성공 ");
+                } else {
+                    System.out.println(" 삽입 실패 ");
+                }
             }
 
-            int affected = preparedStatement.executeUpdate();
-
-
-            if (affected > 0) {
-//                System.out.println(" 저장 성공 ");
-            } else {
-                System.out.println(" 삽입 실패 ");
-            }
 
             c.commit();
 

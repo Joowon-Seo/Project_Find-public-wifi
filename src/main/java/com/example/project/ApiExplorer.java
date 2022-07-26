@@ -14,12 +14,12 @@ import java.util.List;
 
 public class ApiExplorer {
 
-    public static ArrayList<Wifi> wifiArrayList = new ArrayList<>();
+    public static ArrayList<Wifi> wifiArrayList;
 
     public static void main(String[] args) {
 
 
-        for (int i = 0; i < 15; i++) {
+        for (int i = 0; i < 16; i++) {
             String json = null;
             try {
                 json = getJson(i * 1000 + 1, (i + 1) * 1000);
@@ -70,6 +70,8 @@ public class ApiExplorer {
     }
 
     public static void parsingJson(String json) {
+
+        wifiArrayList = new ArrayList<>();
 
         String jsonString = json;
         JSONObject obj = new JSONObject(jsonString);

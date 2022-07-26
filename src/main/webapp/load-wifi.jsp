@@ -12,7 +12,7 @@
 <meta charset="UTF-8">
 <head>
     <%
-        for (int i = 0; i < 15; i++) {
+        for (int i = 0; i < 18; i++) {
             String json = null;
             try {
                 json = ApiExplorer.getJson(i * 1000 + 1, (i + 1) * 1000);
