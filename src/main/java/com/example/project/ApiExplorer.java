@@ -8,8 +8,12 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ApiExplorer {
+
+    public static ArrayList<Wifi> wifiArrayList = new ArrayList<>();
 
     public static void main(String[] args)  {
 
@@ -109,9 +113,13 @@ public class ApiExplorer {
             wifi.setyCoordinates(yCoordinates);
             wifi.setOperationDate(operationDate);
 
-            DbControl dbControl = new DbControl();
-            dbControl.insert(wifi);
+            wifiArrayList.add(wifi);
+
+//
         }
+
+        DbControl dbControl = new DbControl();
+        dbControl.insert(wifiArrayList);
 
     }
 }

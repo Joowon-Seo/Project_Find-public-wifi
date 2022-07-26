@@ -5,7 +5,7 @@ public class DbControlTest {
     public static void main(String[] args) {
 
         DbControl wifi = new DbControl();
-        wifi.deleteHistory(3);
+//        wifi.deleteHistory(3);
 //        wifi.createTable();
 //        wifi.createHistoryTable();
 //        wifi.insertHistory(37.2831549, 127.1569879);

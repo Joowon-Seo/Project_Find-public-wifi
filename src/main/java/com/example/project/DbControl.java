@@ -6,7 +6,6 @@ import java.util.List;
 public class DbControl {
     public static Connection c = null;
     public static Statement stat = null;
-
     public static PreparedStatement preparedStatement = null;
     public static ResultSet rs = null;
 
@@ -92,49 +91,63 @@ public class DbControl {
         }
         System.out.println("Table created successfully");
     }
-    public void insert(Wifi wifi) {
+    public void insert(ArrayList<Wifi> wifiArrayList) {
 
 
         connect();
 
+
         try {
+            c.setAutoCommit(false);
+            String sql = "";
+            for (int i = 0; i < wifiArrayList.size(); i++) {
+                Wifi wifi = wifiArrayList.get(i);
 
-            String sql = "INSERT INTO WIFI (managementNumber, boroughs, wifiName, roadNameAddress, " +
-                    "                  detailedAddress, installationLocationFloor, installationType, installationOrgan, " +
-                    "                  serviceClassification, communicationsNetwork, installationYear, indoorAndOutdoorClassification, " +
-                    "                  wifiConnectionEnvironment, xCoordinates, yCoordinates, operationDate) " +
-                    "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
-            preparedStatement = c.prepareStatement(sql);
+                sql += "INSERT INTO WIFI (managementNumber, boroughs, wifiName, roadNameAddress, " +
+                        "                  detailedAddress, installationLocationFloor, installationType, installationOrgan, " +
+                        "                  serviceClassification, communicationsNetwork, installationYear, indoorAndOutdoorClassification, " +
+                        "                  wifiConnectionEnvironment, xCoordinates, yCoordinates, operationDate) " +
+                        "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+                preparedStatement = c.prepareStatement(sql);
 
-            preparedStatement.setString(1, wifi.getManagementNumber());
-            preparedStatement.setString(2, wifi.getBoroughs());
-            preparedStatement.setString(3, wifi.getWifiName());
-            preparedStatement.setString(4, wifi.getRoadNameAddress());
-            preparedStatement.setString(5, wifi.getDetailedAddress());
-            preparedStatement.setString(6, wifi.getInstallationLocationFloor());
-            preparedStatement.setString(7, wifi.getInstallationType());
-            preparedStatement.setString(8, wifi.getInstallationOrgan());
-            preparedStatement.setString(9, wifi.getServiceClassification());
-            preparedStatement.setString(10, wifi.getCommunicationsNetwork());
-            preparedStatement.setString(11, wifi.getInstallationYear());
-            preparedStatement.setString(12, wifi.getIndoorAndOutdoorClassification());
-            preparedStatement.setString(13, wifi.getWifiConnectionEnvironment());
-            preparedStatement.setDouble(14, wifi.getyCoordinates());
-            preparedStatement.setDouble(15, wifi.getxCoordinates());
-            preparedStatement.setString(16, wifi.getOperationDate());
+                preparedStatement.setString(1, wifi.getManagementNumber());
+                preparedStatement.setString(2, wifi.getBoroughs());
+                preparedStatement.setString(3, wifi.getWifiName());
+                preparedStatement.setString(4, wifi.getRoadNameAddress());
+                preparedStatement.setString(5, wifi.getDetailedAddress());
+                preparedStatement.setString(6, wifi.getInstallationLocationFloor());
+                preparedStatement.setString(7, wifi.getInstallationType());
+                preparedStatement.setString(8, wifi.getInstallationOrgan());
+                preparedStatement.setString(9, wifi.getServiceClassification());
+                preparedStatement.setString(10, wifi.getCommunicationsNetwork());
+                preparedStatement.setString(11, wifi.getInstallationYear());
+                preparedStatement.setString(12, wifi.getIndoorAndOutdoorClassification());
+                preparedStatement.setString(13, wifi.getWifiConnectionEnvironment());
+                preparedStatement.setDouble(14, wifi.getyCoordinates());
+                preparedStatement.setDouble(15, wifi.getxCoordinates());
+                preparedStatement.setString(16, wifi.getOperationDate());
 
+            }
 
             int affected = preparedStatement.executeUpdate();
+
 
             if (affected > 0){
 //                System.out.println(" 저장 성공 ");
             } else {
-                System.out.println(" 저장 실패 ");
+                System.out.println(" 삽입 실패 ");
             }
+
+            c.commit();
 
         }
         catch (SQLException e) {
             e.printStackTrace();
+            try {
+                c.rollback();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
         } finally {
 
             // 위에서 오류가 나서 완벽한 close를 못 할 수도 있기 떄문에 finally 에서 처리해야 한다.
